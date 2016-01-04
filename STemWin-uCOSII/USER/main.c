@@ -69,14 +69,100 @@ void main_ui(void)
 }
 void GUI_Text_Disp(void)
 {
+//字符大小6*8
+	GUI_RECT rect = {0,48,80,64};
 	GUI_DispChar('A');//显示单个字符
-	GUI_DispCharAt('B',0,0);//在指定位置显示指定的单个字符
+	GUI_DispCharAt('B',0,8);//在指定位置显示指定的单个字符
+	GUI_DispChars('C',5);//指定字符显示的次数，从当前位置开始显示
+	GUI_DispNextLine();//将光标移动至下一行
+	GUI_DispChars('D',5);
+	
+	GUI_DispNextLine();
+	GUI_DispString("dispstring");//在当前位置显示字符串
+	GUI_DispStringAt("distring on pos 00000000000000000000000000000",0,32);//在指定位置开始显示字符串
+	GUI_DispStringAtCEOL("dis and clear to end",72,32);//从指定位置开始显示字符串，并清除至行末
+	GUI_DispStringHCenterAt("center display",80,40);//以指定位置为中点，左右延伸显示字符串，表现为居中形式,设定位置时需注意字符串长度
+//	GUI_DispStringInRect("In rect disp1241235",&rect,GUI_TA_RIGHT);//
+	GUI_DispStringInRectWrap("In rect disp1241235",&rect,GUI_TA_LEFT,GUI_WRAPMODE_CHAR);//在指定矩形区域显示字符，并设置对齐模式
+																					//和自动换行模式
+//	GUI_SetColor(GUI_RED);
+//	GUI_FillRect(0,80,60,92);
+	GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
+	GUI_DispNextLine();
+	GUI_DispString("dispstring");//在当前位置显示字符串
+	
+		GUI_SetTextMode(GUI_TEXTMODE_REV);// 显示反转文本，黑字白底
+	GUI_DispNextLine();
+	GUI_DispString("dispstring");//在当前位置显示字符
+	
+	GUI_SetTextAlign(GUI_TA_BOTTOM);
+		GUI_SetTextMode(GUI_TEXTMODE_TRANS);//透明文本，屏幕上原有内容可见
+	GUI_DispNextLine();
+	GUI_DispString("dispstring");//在当前位置显示字符
+	
+		GUI_SetTextMode(GUI_TEXTMODE_XOR);//使用与底色相异的颜色显示字符
+	GUI_DispNextLine();
+	GUI_DispString("dispstring");//在当前位置显示字符
+	
+//	GUI_SetTextAlign(GUI_TA_BOTTOM);
+//	GUI_DispNextLine();
+//	GUI_DispString("text disp align");//在当前位置显示字符
+	GUI_GotoXY(0,GUI_GetDispPosY());
+	GUI_DispCEOL();//从当前文本位置清除至行末
+	GUI_Clear();//清除整个显示窗口或屏幕
+}
+void emwin_texttest(void)
+{
+	int i;
+	char acText[]  = "This example text wrapping";
+	GUI_RECT Rect  ={0,200,70,320};  //???????? 
+
+	GUI_WRAPMODE aWm[] = 
+	{
+		GUI_WRAPMODE_NONE,//无自动换行
+		GUI_WRAPMODE_CHAR,//以字符模式换行
+		GUI_WRAPMODE_WORD//以字模式换行
+	};
+	GUI_SetBkColor(GUI_BLUE);    //??????
+	GUI_Clear();            //??
+	GUI_SetFont(&GUI_Font24_ASCII);    //????
+	GUI_SetColor(GUI_YELLOW);       //??????
+	GUI_DispString("HELLO WORD!");
+	GUI_SetFont(&GUI_Font8x16);    //????
+	GUI_SetPenSize(10);        //?????
+	GUI_SetColor(GUI_RED);      //????
+	GUI_DrawLine(80,50,180,130);    //??
+	GUI_DrawLine(80,130,180,50);    //??
+	GUI_SetBkColor(GUI_BLACK);    //??????
+	GUI_SetColor(GUI_WHITE);    //?????????
+	GUI_SetTextMode(GUI_TM_NORMAL);  //????
+	GUI_DispStringHCenterAt("GUI_TM_NORMAL",120,50);
+	GUI_SetTextMode(GUI_TM_REV);    //????
+	GUI_DispStringHCenterAt("GUI_TM_REV"    ,120,66);
+	GUI_SetTextMode(GUI_TM_TRANS);  //????
+	GUI_DispStringHCenterAt("GUI_TM_TRANS" ,120,82);
+	GUI_SetTextMode(GUI_TM_XOR);      //????
+	GUI_DispStringHCenterAt("GUI_TM_XOR"    ,120,98);
+	GUI_SetTextMode(GUI_TM_TRANS|GUI_TM_REV);//??????
+	GUI_DispStringHCenterAt("GUI_EM_TRANS|GUI_TM_REV",120,114);
+	GUI_SetTextMode(GUI_TM_TRANS);   //????
+	for(i=0;i<3;i++)
+	{
+		GUI_SetColor(GUI_WHITE);
+		GUI_FillRectEx(&Rect);
+		GUI_SetColor(GUI_BLACK);
+
+		GUI_DispStringInRectWrap(acText,&Rect,GUI_TA_LEFT,aWm[i]);
+		Rect.x0 += 80;
+		Rect.x1 += 80;
+	} 
 }
 int main(void)
 {
 	BSP_Init();
-	main_ui();
+//	main_ui();
 	GUI_Text_Disp();
+	emwin_texttest();
 	OSInit();
 	OSTaskCreate(start_task,(void *)0,(OS_STK *)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);//创建起始任务
 	OSStart();
