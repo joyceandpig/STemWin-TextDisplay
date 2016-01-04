@@ -115,7 +115,7 @@ void emwin_texttest(void)
 {
 	int i;
 	char acText[]  = "This example text wrapping";
-	GUI_RECT Rect  ={0,200,70,320};  //???????? 
+	GUI_RECT Rect  ={0,200,70,280};  //
 
 	GUI_WRAPMODE aWm[] = 
 	{
@@ -123,29 +123,29 @@ void emwin_texttest(void)
 		GUI_WRAPMODE_CHAR,//以字符模式换行
 		GUI_WRAPMODE_WORD//以字模式换行
 	};
-	GUI_SetBkColor(GUI_BLUE);    //??????
-	GUI_Clear();            //??
-	GUI_SetFont(&GUI_Font24_ASCII);    //????
-	GUI_SetColor(GUI_YELLOW);       //??????
+	GUI_SetBkColor(GUI_BLUE);    //
+	GUI_Clear();            //
+	GUI_SetFont(&GUI_Font24_ASCII);    //
+	GUI_SetColor(GUI_YELLOW);       //
 	GUI_DispString("HELLO WORD!");
-	GUI_SetFont(&GUI_Font8x16);    //????
-	GUI_SetPenSize(10);        //?????
-	GUI_SetColor(GUI_RED);      //????
-	GUI_DrawLine(80,50,180,130);    //??
-	GUI_DrawLine(80,130,180,50);    //??
-	GUI_SetBkColor(GUI_BLACK);    //??????
-	GUI_SetColor(GUI_WHITE);    //?????????
-	GUI_SetTextMode(GUI_TM_NORMAL);  //????
+	GUI_SetFont(&GUI_Font8x16);    //
+	GUI_SetPenSize(10);        //
+	GUI_SetColor(GUI_RED);      //
+	GUI_DrawLine(80,50,180,130);    //
+	GUI_DrawLine(80,130,180,50);    //
+	GUI_SetBkColor(GUI_BLACK);    //黑底
+	GUI_SetColor(GUI_WHITE);    //白字
+	GUI_SetTextMode(GUI_TEXTMODE_NORMAL);  //正常模式
 	GUI_DispStringHCenterAt("GUI_TM_NORMAL",120,50);
-	GUI_SetTextMode(GUI_TM_REV);    //????
+	GUI_SetTextMode(GUI_TEXTMODE_REV);    //颜色反转
 	GUI_DispStringHCenterAt("GUI_TM_REV"    ,120,66);
-	GUI_SetTextMode(GUI_TM_TRANS);  //????
+	GUI_SetTextMode(GUI_TEXTMODE_TRANS);  //透明文本
 	GUI_DispStringHCenterAt("GUI_TM_TRANS" ,120,82);
-	GUI_SetTextMode(GUI_TM_XOR);      //????
+	GUI_SetTextMode(GUI_TEXTMODE_XOR);      //异或文本，与原本设定背景色相异
 	GUI_DispStringHCenterAt("GUI_TM_XOR"    ,120,98);
-	GUI_SetTextMode(GUI_TM_TRANS|GUI_TM_REV);//??????
+	GUI_SetTextMode(GUI_TM_TRANS|GUI_TM_REV);//透明、反转文本
 	GUI_DispStringHCenterAt("GUI_EM_TRANS|GUI_TM_REV",120,114);
-	GUI_SetTextMode(GUI_TM_TRANS);   //????
+	GUI_SetTextMode(GUI_TM_TRANS);   //透明文本
 	for(i=0;i<3;i++)
 	{
 		GUI_SetColor(GUI_WHITE);
